@@ -26,6 +26,7 @@
         '      <span class="button-edit" ng-click="vm.editLoadout(loadout, $event)"><i class="fa fa-pencil"></i></span>',
         '    </div>',
         '  </div>',
+        '  <div class="loadout-list"><div class="loadout-set"><span class="button-name" ng-click="vm.equipMax($event)">Max Light</span></div></div>',
         '</div>'
       ].join('')
     };
@@ -114,6 +115,82 @@
 
       applyLoadoutItems(items, loadout, _items, scope);
     };
+    
+    vm.equipMax = function equipMax($event) {
+      var classType, items = [], matchGroups = [],
+        matchList = ['Primary','Special','Heavy','Ghost','Helmet','Gauntlets','Chest','Leg','ClassItem','Artifact'],
+        classSpecific = ['Helmet','Gauntlets','Chest','Leg','ClassItem','Artifact'];
+      
+      ngDialog.closeAll();
+
+      var scope = {
+        failed: false
+      };
+      
+      switch(vm.store.class) {
+        case "titan":
+          classType = 0;
+          break;
+        case "hunter":
+          classType = 1;
+          break;
+        case "warlock":
+          classType = 2;
+          break;
+      }
+      
+      var groups = _.groupBy(dimItemService.getItems(), 'type');
+      console.log(groups);
+      
+      _.each(matchList, function(match) {
+        matchGroups.push(groups[match]);
+      });
+      
+      _.each(matchGroups, function(group) {
+        var match = angular.copy(_.max(group, function(item){
+          if (_.indexOf(classSpecific,item.type) > -1 && item.classType !== classType) {
+            return false;
+          } else if (item.primStat) {
+            return item.primStat.value;
+          } else {
+            return false;
+          }
+        }));
+        if (match && !(_.indexOf(classSpecific,match.type) > -1 && match.classType !== classType)) {
+          match.equipped = true;
+          items.push(match);
+        }
+      });
+
+      items = _.chain(items)
+        .values()
+        .flatten()
+        .value();
+
+      var _types = _.chain(items)
+        .pluck('type')
+        .uniq()
+        .value();
+
+      var _items = _.chain(vm.store.items)
+        .filter(function(item) {
+          return _.contains(_types, item.type);
+        })
+        .filter(function(item) {
+          return (!_.some(items, function(i) {
+            return ((i.id === item.id) && (i.hash === item.hash));
+          }));
+        })
+        .groupBy(function(item) {
+          return item.type;
+        })
+        .value();
+        
+      var loadout = new Object();
+      loadout.name = 'Max Light';
+
+      applyLoadoutItems(items, loadout, _items, scope);
+    }
 
     function applyLoadoutItems(items, loadout, _items, scope) {
       if (items.length > 0) {
