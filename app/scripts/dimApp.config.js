@@ -107,11 +107,9 @@
           $timeout(function() {
             toaster.pop({
               type: 'info',
-              title: 'v3.2 Released',
+              title: 'v0.0.1 Released',
               body: [
-'<p>We\'ve added a \'Maximum Light\' loadout, greatly improved the performance while moving items, and added <span style="font-style: italic">is:year1</span> and <span style="font-style: italic">is:year2</span> filters.',
-'<p><a href="http://bit.ly/1SssIq9" target="_blank">Learn more about the the updates in v3.2.</a>',
-'<p>Follow us on: <a style="margin: 0 5px;" href="http://destinyitemmanager.reddit.com" target="_blank"><img title="/r/DIM on Reddit" style="vertical-align: text-bottom;" src="images/reddit.png"></a> <a style="margin: 0 5px;" href="http://twitter.com/ThisIsDIM" target="_blank"><img style="vertical-align: text-bottom;" title="@ThisIsDIM on Twitter" src="images/twitter.png"></a>',
+'<p>This is mostly useless. But it might be fun! Try an old raid, or pop into Crucible with a randomized loadout.</p>',
 '<p><input style="margin-top: 1px; vertical-align: middle;" id="20151010Checkbox" type="checkbox"> <label for="20151010Checkbox">Hide This Popup</label></p>'].join(''),
               timeout: 0,
               bodyOutputType: 'trustedHtml',
