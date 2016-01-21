@@ -437,6 +437,9 @@
           } else {
             return $q.resolve(true);
           }
+        } else if ((item.owner !== store.id) && (store.id !== 'vault')) {
+          console.log(store.id)
+        //  moveTo(item, 'vault')
         } else {
           // Not enough space!
           if (!triedFallback) {

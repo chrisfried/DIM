@@ -522,9 +522,14 @@ img.void {
   padding: 0 12px 1px;
   margin: 0 -12px;
 }
+.section {
+  margin-bottom: 14px;
+}
 .sub-section {
-  margin-bottom: 20px;
   position: relative;
+  width: 77px;
+  height: 73px;
+  display: inline-flex;
 }
 .equippable {
   display: inline-block;
@@ -545,76 +550,10 @@ img.void {
 
 .col-5 .unequippable {}
 .col-5 .vault .unequippable {}
-.sub-section {
-  clear: both;
-}
 .equipped {
   width: 52px;
   margin-right: 12px;
 }
-/*.guardian .unequipped {
-  width: 156px;
-}
-.guardian.condensed .unequipped {
-  width: 208px;
-}*/
-/*.vault .unequipped {
-  width: 208px;
-}
-.vault.condensed .unequipped {
-  width: 312px;
-}*/
-.unequipped.on-drag-enter, .equipped.on-drag-enter {
-  box-shadow: 0 0 15px 2px rgba(170, 170, 170, .5);
-  background-color: rgba(170, 170, 170, .5);
-}
-.unequipped.on-drag-hover {
-  box-shadow: 0 0 15px 2px rgba(200, 200, 200, .7) !important;
-  background-color: rgba(200, 200, 200, .7) !important;
-}
-.equipped.on-drag-hover {
-  box-shadow: 0 0 15px 2px rgba(255, 255, 255, .7) !important;
-  background-color: rgba(255, 255, 255, .7) !important;
-}
-.sub-section.on-drag-enter .unequipped {
-  box-shadow: 0 0 15px 2px rgba(170, 170, 170, .5);
-  background-color: rgba(170, 170, 170, .5);
-}
-.sub-section.on-drag-hover .unequipped {
-  box-shadow: 0 0 15px 2px rgba(200, 200, 200, .7);
-  background-color: rgba(200, 200, 200, .7);
-}
-.vault .unequipped.on-drag-enter {
-  box-shadow: 0 0 15px 2px rgba(210, 210, 210, .5);
-  background-color: rgba(210, 210, 210, .5);
-}
-.vault .unequipped.on-drag-hover {
-  box-shadow: 0 0 15px 2px rgba(240, 240, 240, .7);
-  background-color: rgba(240, 240, 240, .7);
-}
-.item-target {
-  vertical-align: top;
-  position: relative;
-  display: none;
-  width: 44px;
-  height: 44px;
-  cursor: pointer;
-  margin: 4px;
-  background: url('../images/bg_inventory_bucket_single_crop.png');
-  background-size: contain;
-}
-.empty .item-target {
-  display: inline-block;
-  box-shadow: none;
-}
-
-/*.unequipped.on-drag-enter .item-target, .unequippable.on-drag-enter .item-target {
-  display: inline-block;
-  box-shadow: 0 0 10px #ccc;
-}
-.unequipped.on-drag-hover .item-target, .unequippable.on-drag-enter .item-target {
-  box-shadow: 0 0 10px 2px #eee;
-}*/
 
 .counter {
   position: absolute;
@@ -679,8 +618,8 @@ img.void {
   margin: 2px 2px -2px 2px;
   position: relative;
   display: inline-block;
-  width: 44px;
-  height: 44px;
+  width: 69px;
+  height: 69px;
   background-color: #5c7183;
   cursor: pointer;
   border: 2px solid #DDD;
@@ -697,8 +636,8 @@ img.void {
   z-index: 2;
 }
 .item > .img, .item > img {
-  width: 44px;
-  height: 44px;
+  width: 69px;
+  height: 69px;
   background-size: cover;
 }
 .item .stack {
@@ -719,7 +658,7 @@ img.void {
 }
 .character {
   margin-bottom: 16px;
-  height: 50px;
+  height: 200px;
   position: relative;
 }
 .character-box {
@@ -850,6 +789,10 @@ img.void {
   line-height: 35px;
   background-color: #3A4150;
   color: #E4E4E4;
+  position: relative;
+  top: 50px;
+  width: 100%;
+  cursor: pointer;
 }
 .loadout-popup {
   display: none;
@@ -1479,7 +1422,7 @@ button.toast-close-button {
   right: 0;
   top: 50px;
   background-color: #434444;
-  height: 75px;
+  height: 120px;
   position: fixed;
   z-index: 4;
   box-shadow: 0 1px 6px 0px #222;
@@ -1491,7 +1434,7 @@ button.toast-close-button {
   left: auto !important;
 }
 .something-is-sticky .fixed-header-placeholder {
-  height: 71px !important;
+  height: 101px !important;
 }
 .inline-stats {
   display: inline-block;

@@ -60,19 +60,9 @@
         '        <span>{{ ::key }}</span>',
         '        <span class="bucket-count" ng-if="::vm.store.id === \'vault\'">{{ vm.sortSize[key] ? vm.sortSize[key] : 0 }}/{{:: (key === \'Weapons\' || key === \'Armor\') ? 72 : 36 }}  </span>',
         '      </div>',
-        '      <div ng-repeat="type in ::value track by type" class="sub-section"',
-        '           ng-class="[\'sort-\' + type.replace(\' \', \'-\').toLowerCase(), { empty: !vm.data[vm.orderedTypes[type]] }]"',
-        '           ui-on-drop="vm.onDrop($data, $event, false)"',
-        '           drop-channel="{{:: type + \',\' + vm.store.id + type }}">',
-        '        <div ng-class="vm.styles[type.replace(\' \', \'-\')].equipped"',
-        '             ng-if="::vm.store.id !== \'vault\'"',
-        '             ui-on-drop="vm.onDrop($data, $event, true)"',
-        '              drop-channel="{{:: type + \',\' + vm.store.id + type }}">',
+        '      <div ng-repeat="type in ::value track by type" class="sub-section">',
+        '        <div ng-class="vm.styles[type.replace(\' \', \'-\')].equipped">',
         '          <div ng-repeat="item in vm.data[vm.orderedTypes[type]] | equipped:true track by item.index" dim-store-item store-data="vm.store" item-data="item"></div>',
-        '        </div>',
-        '        <div ng-class="vm.styles[type.replace(\' \', \'-\')].unequipped" ui-on-drop="vm.onDrop($data, $event, false)" drop-channel="{{ type + \',\' + vm.store.id + type }}">',
-        '          <div ng-repeat="item in vm.data[vm.orderedTypes[type]] | equipped:false | sortItems:vm.itemSort track by item.index" dim-store-item store-data="vm.store" item-data="item"></div>',
-        '          <div class="item-target"></div>',
         '        </div>',
         '      </div>',
         '    </div>',
@@ -135,7 +125,6 @@
 
     vm.categories = { // Grouping of the types in the rows.
       Weapons: [
-        'Class',
         'Primary',
         'Special',
         'Heavy',
@@ -150,21 +139,6 @@
       General: [
         'Artifact',
         'Ghost',
-        'Consumable',
-        'Material',
-        'Emblem',
-        'Armor',
-        'Emote',
-        'Ship',
-        'Vehicle',
-        'Horn',
-        'Missions',
-        'Bounties'
-      ],
-      Postmaster: [
-        'Messages',
-        'Special Orders',
-        'Lost Items'
       ]
     };
 

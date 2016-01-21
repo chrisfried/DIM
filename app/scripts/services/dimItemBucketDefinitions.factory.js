@@ -9,7 +9,7 @@
   function ItemBucketDefinitions($q, $timeout, $http) {
     var deferred = $q.defer();
 
-    $http.get('scripts/api-manifest/buckets.json?v=3.2.0')
+    $http.get('scripts/api-manifest/buckets.json?v=0.0.1')
       .success(function(data) {
         deferred.resolve(data);
       })

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>DIM v3.2.0</title>
+  <title>DIS v0.0.1</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -21,22 +21,16 @@
       <div class="content">
         <span class="header-right">
           <div dim-platform-choice class="header-right"></div>
-          <div dim-search-filter class="header-right"></div>
           <div class="header-right" id="actions">
             <span class="link" ng-click="app.refresh($event)" title="Refresh Destiny Data"><i ng-class="{'fa-spin': loadingTracker.active()}" class="fa fa-refresh"></i></span>
-            <span class="link" ng-click="app.showSetting($event)" title="Settings"><i class="fa fa-cog"></i></span>
-            <span class="link" ng-click="app.showFilters($event)" title="Filters"><i class="fa fa-filter"></i></span>
           </div>
         </span>
-        <span class="logo">DIM</span>
+        <span class="logo">DIS</span>
         <span class="link" ng-click="app.showAbout($event)">About</span>
-        <span class="link" ng-click="app.showSupport($event)">Support DIM</span>
       </div>
     </div>
     <toaster-container toaster-options="{ 'time-out': 10000, limit: 6 }"></toaster-container>
     <div class="about modal-dialog" ng-show="app.about"></div>
-    <div class="donate modal-dialog" ng-show="app.donate"></div>
-    <div class="filters modal-dialog" ng-show="app.filters"></div>
     <div id="content" ui-view></div>
   </div>
 

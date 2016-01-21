@@ -20,9 +20,8 @@
         'item': '=itemData'
       },
       template: [
-        '<div ui-draggable="{{ ::vm.draggable }}" id="{{ ::vm.item.index }}" drag-channel="{{ ::vm.dragChannel }}" ',
+        '<div id="{{ ::vm.item.index }}" ',
         '  title="{{vm.item.primStat.value}} {{::vm.item.name}}" ',
-        '  drag="::vm.item.index"',
         '  ng-class="{',
         "    'item': true,",
         "    'search-hidden': !vm.item.visible,",
@@ -145,7 +144,7 @@
       'stat-damage-kinetic': false
     };
 
-    var showStats = vm.itemStat && item.primStat && item.primStat.value;
+    var showStats = item.primStat && item.primStat.value;
     var showDamageType = !vm.itemStat && vm.item.sort === 'Weapons';
     vm.showBadge = (showStats || showDamageType);
 
