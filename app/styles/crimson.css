@@ -1,0 +1,53 @@
+body {
+  background-color: #6f0003;
+}
+#header {
+  background-color: #560001;
+  border-bottom: solid 1px #863031;
+}
+.title {
+  background-color: #560001;
+  border-top: solid 1px #460000;
+  border-bottom: solid 1px #863031;
+}
+.storage:first-child .title {
+  border-left: solid 1px #460000;
+}
+.move-popup {
+  background-color: #560001;
+}
+.character .ngdialog {
+  border: solid 1px #460000;
+}
+.loadout-list > .loadout-set {
+  background-color: #560001;
+  border-top: solid 1px #863031;
+  border-bottom: solid 1px #460000;
+}
+.loadout-list .loadout-set:hover, .loadout-new:hover, .loadout-options span:hover {
+  background-color: #460000;
+  border-top: solid 1px #460000;
+}
+.about.ngdialog, .app-settings.ngdialog, .filters.ngdialog, .support.ngdialog {
+  background-color: rgba(10, 0, 0, 0.85);
+}
+.about.ngdialog .ngdialog-content, .app-settings.ngdialog .ngdialog-content, .filters.ngdialog .ngdialog-content, .support.ngdialog .ngdialog-content {
+  background-color: #6f0003;
+  border: solid 1px #863031;
+}
+.ngdialog-content h1 {
+  background-color: #560001;
+  border-bottom: solid 1px #863031;
+}
+.ngdialog-content dl {
+  background-color: #560001;
+}
+.ngdialog-content td {
+  border-color: #6f0003;
+}
+.ngdialog-content table {
+  background-color: #863031;
+}
+.ngdialog-content table tr:nth-child(2n+1) {
+  background-color: #560001;
+}
