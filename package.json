@@ -1,7 +1,7 @@
 {
   "name": "DIM",
   "version": "0.0.1",
-  "description": "Destiny Item Manager - Chrome app",
+  "description": "Destiny Item Shuffler - Chrome app",
   "main": "app/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
