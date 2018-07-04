@@ -69,6 +69,11 @@ if ($featureFlags.vendors) {
   });
 }
 
+destiny2Links.push({
+  state: 'destiny2.party',
+  text: 'Party.Party'
+});
+
 interface State {
   xurAvailable: boolean;
   account?: DestinyAccount;

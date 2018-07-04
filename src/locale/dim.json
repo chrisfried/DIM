@@ -739,5 +739,8 @@
       "Support": "Supporting DIM",
       "Teespring": "We also have shirts with our new logo for sale on {{link}}"
     }
+  },
+  "Party": {
+    "Party": "Party"
   }
 }
