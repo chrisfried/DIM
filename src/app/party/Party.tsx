@@ -6,19 +6,32 @@ import { DestinyAccount } from '../accounts/destiny-account.service';
 import ErrorBoundary from '../dim-ui/ErrorBoundary';
 import { Loading } from '../dim-ui/Loading';
 import './party.scss';
+import PartyMember from './PartyMember';
+import PartyName from './PartyName';
+import {
+  D2ManifestDefinitions,
+  getDefinitions
+} from '../destiny2/d2-definitions.service';
+import { D2ManifestService } from '../manifest/manifest-service';
+import { BungieMembershipType } from 'bungie-api-ts/user';
 
-const SERVER_URL = 'https://dim-party.herokuapp.com/';
-// const SERVER_URL = 'http://localhost:3000/';
+// const SERVER_URL = 'https://dim-party.herokuapp.com/';
+const SERVER_URL = 'http://localhost:3000/';
 
 interface Props {
   account: DestinyAccount;
 }
 
 interface State {
+  defs?: D2ManifestDefinitions;
   registeredId?: string;
+  registeredType?: BungieMembershipType;
   activeRoom: string;
   rooms: string[];
-  users: string[];
+  users: {
+    membershipType: BungieMembershipType;
+    destinyMembershipId: string;
+  }[];
   time?: string;
 }
 
@@ -42,11 +55,20 @@ export default class Party extends React.Component<
     };
   }
 
-  initSocket(): void {
+  initSocket() {
     this.socket = io(SERVER_URL);
 
     this.socket.on('connect', () => {
-      this.socket.emit('register', this.props.account.membershipId);
+      this.socket.emit('register', {
+        membershipType: this.props.account.platformType,
+        destinyMembershipId: this.props.account.membershipId
+      });
+    });
+
+    this.socket.on('disconnect', () => {
+      const registeredId = '';
+      const registeredType = -1;
+      this.setState({ registeredId, registeredType });
     });
 
     this.socket.on('time', (timeString) => {
@@ -54,8 +76,9 @@ export default class Party extends React.Component<
       this.setState({ time });
     });
 
-    this.socket.on('registered', (registeredId) => {
-      this.setState({ registeredId });
+    this.socket.on('registered', ({ registeredType, registeredId }) => {
+      this.setState({ registeredType, registeredId });
+      this.joinRoom(this.state.activeRoom || 'lobby');
     });
 
     this.socket.on('emitRooms', (rooms) => {
@@ -72,7 +95,14 @@ export default class Party extends React.Component<
     });
   }
 
+  async loadParty() {
+    const defs = await getDefinitions();
+    D2ManifestService.loaded = true;
+    this.setState({ defs });
+  }
+
   componentDidMount() {
+    this.loadParty();
     this.initSocket();
   }
 
@@ -90,9 +120,17 @@ export default class Party extends React.Component<
   }
 
   render() {
-    const { registeredId, activeRoom, rooms, users, time } = this.state;
+    const {
+      defs,
+      registeredId,
+      registeredType,
+      activeRoom,
+      rooms,
+      users,
+      time
+    } = this.state;
 
-    if (!registeredId) {
+    if (!defs || !registeredId || !registeredType || !activeRoom) {
       return (
         <div className="party d2-party dim-page">
           <Loading />
@@ -100,39 +138,50 @@ export default class Party extends React.Component<
       );
     }
 
-    const roomsList = rooms.map((room, i) => {
-      return <button key={i} onClick={this.joinRoom.bind(this, room)}> {room} </button>;
-    });
-
-    const userList = users.map((user, i) => {
-      return <li key={i}>{user}</li>;
+    const roomsList = rooms.map((room) => {
+      return (
+        <button key={room} onClick={this.joinRoom.bind(this, room)}>
+          {room}
+        </button>
+      );
     });
 
     if (activeRoom !== 'lobby') {
       return (
-      <div className="party d2-party dim-page">
-        <ErrorBoundary name="Party">
-          <h3>{activeRoom}'s Party</h3>
-          <button onClick={this.leaveRoom.bind(this, activeRoom)}>Leave Party</button>
-          <h4>Party Members</h4>
-          <ul>{userList}</ul>
-        </ErrorBoundary>
-        <div>
-          {time}
+        <div className="party d2-party dim-page">
+          <ErrorBoundary name="Party">
+            <PartyName
+              membershipType={this.props.account.platformType}
+              destinyMembershipId={activeRoom}
+            />
+            <button onClick={this.leaveRoom.bind(this, activeRoom)}>
+              Leave Party
+            </button>
+            <h4>Party Members</h4>
+            <ul>
+              {users.map((user) => (
+                <PartyMember
+                  membershipType={user.membershipType}
+                  destinyMembershipId={user.destinyMembershipId}
+                  key={user.destinyMembershipId}
+                />
+              ))}
+            </ul>
+          </ErrorBoundary>
+          <div>{time}</div>
         </div>
-      </div>
       );
     }
 
     return (
       <div className="party d2-party dim-page">
         <ErrorBoundary name="Party">
-          <button onClick={this.joinRoom.bind(this, registeredId)}>New Party</button>
+          <button onClick={this.joinRoom.bind(this, registeredId)}>
+            New Party
+          </button>
           {roomsList}
         </ErrorBoundary>
-        <div>
-          {time}
-        </div>
+        <div>{time}</div>
       </div>
     );
   }
