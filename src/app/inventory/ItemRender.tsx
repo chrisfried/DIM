@@ -5,7 +5,7 @@ import ItemRating from './ItemRating';
 import ItemTag from './ItemTag';
 import { BadgeInfo } from './get-badge-info';
 import { bungieBackgroundStyle } from '../dim-ui/BungieImage';
-import { D2Item } from './item-types';
+import { D2Item, DimSocket } from './item-types';
 import { DestinySocketCategoryStyle } from 'bungie-api-ts/destiny2';
 import './ItemRender.scss';
 import { TagValue } from './dim-item-info';
@@ -25,12 +25,27 @@ export default class ItemRender extends React.Component<Props> {
     const category =
       item.sockets &&
       item.sockets.categories.find(
-        (category) => category.category.categoryStyle === DestinySocketCategoryStyle.Consumable
+        (category) => category.category.categoryStyle === DestinySocketCategoryStyle.Reusable
       );
 
-    const sockets = category
-      ? _.take(category.sockets.filter((socketInfo) => socketInfo.plug), 3)
-      : [];
+    const sockets: DimSocket[] = [];
+
+    if (category) {
+      const randomPerks = _.last(
+        category.sockets.filter(
+          (socketInfo) => socketInfo.hasRandomizedPlugItems && socketInfo.plug
+        ),
+        2
+      );
+      const fixedPerks = _.first(
+        category.sockets.filter(
+          (socketInfo) => !socketInfo.hasRandomizedPlugItems && socketInfo.plug
+        ),
+        3 - randomPerks.length
+      );
+      _.each(fixedPerks, (perk) => sockets.push(perk));
+      _.each(randomPerks, (perk) => sockets.push(perk));
+    }
 
     return (
       <div
@@ -52,10 +67,7 @@ export default class ItemRender extends React.Component<Props> {
           {category &&
             sockets.map((socketInfo, index) => (
               <div key={socketInfo.socketIndex} className={`plug-${index + 1}`}>
-                {socketInfo.plug &&
-                  category.category.categoryStyle !== DestinySocketCategoryStyle.Reusable && (
-                    <ItemMod mod={socketInfo.plug.plugItem} />
-                  )}
+                {socketInfo.plug && <ItemMod mod={socketInfo.plug.plugItem} />}
               </div>
             ))}
         </div>
